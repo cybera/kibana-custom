@@ -1,0 +1,46 @@
+<style>
+td.table-graph-cell {
+  padding: 0;
+  margin: 0;
+}
+</style>
+<div ng-controller='pageload' ng-init="init()">
+  <table class="table table-hover table-bordered table-condensed">
+    <thead style="background-color:#181818;">
+      <tr>
+        <th>page</th>
+        <th colspan=2>Total Requests</th>
+        <th colspan=5>response time</th>
+      </tr><tr>
+        <th></th>
+        <th>Total</th><th>Total Over Time</th>
+        <th>Max</th><th>Min</th><th>Mean</th><th>Std. Dev.</th><th>Mean Over Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="page in panel.pages">
+        <td>{{page.path}}</td>
+        <td>{{data_stats.rows[page.query_id].Value.count}}</td>
+        <td class="table-graph-cell">
+          <kibana-simple-panel
+            ng-repeat="(name, panel) in page.event_graph"
+            type="panel.type"
+            ng-model="panel"
+            >
+          </div>
+        </td>
+        <td>{{data_stats.rows[page.query_id].Value.max / 1000000}}</td>
+        <td>{{data_stats.rows[page.query_id].Value.min / 1000000}}</td>
+        <td>{{data_stats.rows[page.query_id].Value.mean / 1000000}}</td>
+        <td>{{data_stats.rows[page.query_id].Value.std_deviation / 1000000}}</td>
+        <td class="table-graph-cell">
+          <kibana-simple-panel
+            ng-repeat="(name, panel) in page.response_time_graph"
+            type="panel.type"
+            ng-model="panel"
+            >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
